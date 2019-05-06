@@ -177,7 +177,7 @@ namespace GameKit
                     if (touch.phase == TouchPhase.Began)
                     {
                         _touchId = touch.fingerId;
-                        Debug.LogFormat("绑定TouchId:{0}", _touchId);
+                        //Debug.LogFormat("绑定TouchId:{0}", _touchId);
                         return true;
                     }
                 }
@@ -187,7 +187,7 @@ namespace GameKit
 
         void UnbindTouch()
         {
-            Debug.LogFormat("解绑TouchId:{0}", _touchId);
+            //Debug.LogFormat("解绑TouchId:{0}", _touchId);
             _touchId = -1;
         }
 
