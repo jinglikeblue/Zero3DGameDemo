@@ -14,7 +14,6 @@ namespace Sokoban
                     ((Action)act)();
                 });
             });
-
         }
     }
 }

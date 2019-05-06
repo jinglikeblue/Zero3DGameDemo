@@ -5,7 +5,11 @@ using UnityEngine.EventSystems;
 
 namespace GameKit
 {
-    public class Joystick : MonoBehaviour
+    public class Joystick : MonoBehaviour,
+        IPointerDownHandler,
+        IBeginDragHandler,
+        IDragHandler,
+        IEndDragHandler
     {
 
         [Header("摇杆最大半径(UGUI)")]
@@ -20,7 +24,7 @@ namespace GameKit
         /// <summary>
         /// 绑定的相机
         /// </summary>
-        public Camera camera;
+        public Camera uiCamera;
 
         /// <summary>
         /// 触摸的起始位置
@@ -43,21 +47,17 @@ namespace GameKit
 
         bool _isStickMode = false;
 
-        private void Awake()
-        {
-            
-        }
+        /// <summary>
+        /// 触摸ID
+        /// </summary>
+        int _touchId = -1;
 
         void Start()
         {
             _stickBorderInitPos = stickBorder.position;
         }
 
-        private void OnGUI()
-        {
-        }
-
-        private void FixedUpdate()
+        private void Update()
         {
             if (_isStickMode == false)
             {
@@ -66,15 +66,11 @@ namespace GameKit
                 CheckKeyPress(KeyCode.LeftArrow);
                 CheckKeyPress(KeyCode.RightArrow);
 
-                CheckKeyRelease(KeyCode.UpArrow);
-                CheckKeyRelease(KeyCode.DownArrow);
-                CheckKeyRelease(KeyCode.LeftArrow);
-                CheckKeyRelease(KeyCode.RightArrow);
-
                 Vector2 tempValue = Vector2.zero;
                 if (_pressedKeyCode.Count > 0)
                 {
-                    switch (_pressedKeyCode[0])
+                    stickBorder.gameObject.SetActive(false);
+                    switch (_pressedKeyCode[_pressedKeyCode.Count - 1])
                     {
                         case KeyCode.UpArrow:
                             tempValue = Vector2.up;
@@ -89,6 +85,10 @@ namespace GameKit
                             tempValue = Vector2.right;
                             break;
                     }
+                }
+                else
+                {
+                    stickBorder.gameObject.SetActive(true);
                 }
 
                 SetValue(tempValue);
@@ -108,14 +108,10 @@ namespace GameKit
         {
             if (Input.GetKeyDown(keyCode))
             {
-                _pressedKeyCode.Remove(keyCode);
-                _pressedKeyCode.Insert(0, keyCode);
+                _pressedKeyCode.Add(keyCode);
             }
-        }
 
-        void CheckKeyRelease(KeyCode keyCode)
-        {            
-            if (false == Input.GetKey(keyCode))
+            if (Input.GetKeyUp(keyCode))
             {
                 _pressedKeyCode.Remove(keyCode);
             }
@@ -128,47 +124,122 @@ namespace GameKit
         /// <returns></returns>
         Vector2 GetLocalMousePosition(GameObject go)
         {
-            if(null == camera)
+            if (null == uiCamera)
             {
                 throw new Exception("Joystick need binding a camera");
             }
 
-            Vector2 screenMouse = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            Vector3 mousePos = Input.mousePosition;
+            if (Input.touchCount > 0)
+            {
+                bool flag = false;
+                //取得绑定的手指的位置
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+                    if (Input.touches[i].fingerId == _touchId)
+                    {
+                        flag = true;
+                        mousePos = Input.touches[i].position;
+                        break;
+                    }
+                }
+
+                if (false == flag)
+                {
+                    Debug.Log("Fuck");
+                }
+            }
+            Vector2 screenPos = new Vector2(mousePos.x, mousePos.y);
             Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(go.GetComponent<RectTransform>(), screenMouse, camera, out localPoint);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(go.GetComponent<RectTransform>(), screenPos, uiCamera, out localPoint);
 
             //Debug.LogFormat("Mouse:{0}  Screen:{1}  LocalPoint:{2}", Input.mousePosition, screenMouse, localPoint);
             return localPoint;
         }
 
-        /// <summary>
-        /// 触摸开始的时候
-        /// </summary>
-        /// <param name="e"></param>
-        public void OnPointerDown(BaseEventData e)
+        void ResetStickBorder()
         {
-            stickBorder.localPosition = GetLocalMousePosition(gameObject);
-
-            stickBorder.GetComponent<CanvasGroup>().alpha = 0.4f;
+            stickBorder.GetComponent<CanvasGroup>().alpha = 0.2f;
+            stickBorder.position = _stickBorderInitPos;
         }
 
         /// <summary>
-        /// 滑动开始的时候
+        /// 绑定触摸
         /// </summary>
-        /// <param name="e"></param>
-        public void OnBeginDrag(BaseEventData e)
+        bool BindTouch()
         {
+            if (_touchId == -1)
+            {
+                //只能绑定一个手指
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+                    Touch touch = Input.touches[i];
+                    if (touch.phase == TouchPhase.Began)
+                    {
+                        _touchId = touch.fingerId;
+                        Debug.LogFormat("绑定TouchId:{0}", _touchId);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        void UnbindTouch()
+        {
+            Debug.LogFormat("解绑TouchId:{0}", _touchId);
+            _touchId = -1;
+        }
+
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            BindTouch();
+
+            if (eventData.pointerId != _touchId)
+            {
+                return;
+            }
+
+            stickBorder.localPosition = GetLocalMousePosition(gameObject);
+            stickBorder.GetComponent<CanvasGroup>().alpha = 0.4f;
+
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if (eventData.pointerId != _touchId)
+            {
+                return;
+            }
+
             _isStickMode = true;
 
             _touchStartPos = GetLocalMousePosition(stickBorder.gameObject);
         }
 
-        /// <summary>
-        /// 滑动中
-        /// </summary>
-        /// <param name="e"></param>
-        public void OnDrag(BaseEventData e)
+        public void OnEndDrag(PointerEventData eventData)
         {
+            if (eventData.pointerId != _touchId)
+            {
+                return;
+            }
+
+            stick.localPosition = Vector3.zero;
+            onValueChange?.Invoke(Vector2.zero);
+            _isStickMode = false;
+
+            ResetStickBorder();
+            UnbindTouch();
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (eventData.pointerId != _touchId)
+            {
+                return;
+            }
+
             Vector2 touchNowPos = GetLocalMousePosition(stickBorder.gameObject);
 
             var moveVector = (touchNowPos - _touchStartPos);
@@ -187,25 +258,6 @@ namespace GameKit
             }
 
             SetValue(value);
-        }
-
-        /// <summary>
-        /// 滑动结束的时候
-        /// </summary>
-        /// <param name="e"></param>
-        public void OnEndDrag(BaseEventData e)
-        {
-            stick.localPosition = Vector3.zero;
-            onValueChange?.Invoke(Vector2.zero);
-            _isStickMode = false;
-
-            ResetStickBorder();
-        }
-
-        void ResetStickBorder()
-        {
-            stickBorder.GetComponent<CanvasGroup>().alpha = 0.2f;
-            stickBorder.position = _stickBorderInitPos;
         }
     }
 }

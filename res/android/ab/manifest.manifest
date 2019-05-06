@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 3034786379
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: hot_res.ab
+      Dependencies: {}
+    Info_1:
+      Name: hot_res/prefabs.ab
+      Dependencies: {}
