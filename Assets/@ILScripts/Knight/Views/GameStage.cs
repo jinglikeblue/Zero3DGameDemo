@@ -1,5 +1,4 @@
-﻿using System;
-using IL.Zero;
+﻿using IL.Zero;
 using UnityEngine;
 using Zero;
 
@@ -8,7 +7,6 @@ namespace IL
     class GameStage : AView
     {
         public Camera Camera { get; private set; }
-
 
         Vector2 _move;
         Vector2 _sign;
@@ -21,7 +19,7 @@ namespace IL
         {
             Camera = GetChildComponent<Camera>("Camera");
             _cameraController = GetChildComponent<CameraController>("Camera");
-            _knight = GetChildComponent<Knight>("Knight");
+            _knight = CreateViewChlid<Knight>("Knight");
         }
 
         protected override void OnDestroy()
@@ -61,7 +59,7 @@ namespace IL
         void ReviseDirByCamera()
         {
             //人物和摄像机之间的向量
-            _c2p = _knight.transform.position - Camera.main.transform.position;
+            _c2p = _knight.gameObject.transform.position - Camera.main.transform.position;
             _c2p.y = 0;
             //计算出这个向量和正前方的旋转角度
             Quaternion q = Quaternion.FromToRotation(Vector3.forward, _c2p);

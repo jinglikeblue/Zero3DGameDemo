@@ -95,9 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4982393455099398}
   - component: {fileID: 95099371677821172}
-  - component: {fileID: 114050512305488190}
   - component: {fileID: 143124382175696450}
-  - component: {fileID: 114208926694460620}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -2124,35 +2122,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114050512305488190
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1055728027649588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e55b52b21821a647ad608430f4ebceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _swordObj: {fileID: 1386019986170476}
-  _shieldObj: {fileID: 1903697825706358}
---- !u!114 &114208926694460620
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1055728027649588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1de53fb081cb2054a99c3d96dfde7071, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _model: {fileID: 114050512305488190}
-  _animator: {fileID: 95099371677821172}
-  _controller: {fileID: 143124382175696450}
-  moveSpeed: 2
-  runSpeed: 5
 --- !u!137 &137799170116898108
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
