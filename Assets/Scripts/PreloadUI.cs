@@ -8,7 +8,7 @@ namespace Sokoban
     public class PreloadUI : MonoBehaviour
     {
 
-        public BitmapText textProgress;
+        public Text textProgress;
         public Preload preload;
         public Text textError;
 
@@ -31,7 +31,7 @@ namespace Sokoban
 
         private void OnProgress(float progress, long total)
         {
-            textProgress.Text = ((int)(progress * 100f)).ToString();
+            textProgress.text = ((int)(progress * 100f)).ToString();
         }
 
         private void OnStageChange(Preload.EState obj)
