@@ -40,7 +40,7 @@ namespace GameKit
 
         List<KeyCode> _pressedKeyCode = new List<KeyCode>();
 
-        Vector2 _lastValue;
+        public Vector2 Value { get; private set; }
 
         bool _isStickMode = false;
 
@@ -98,10 +98,10 @@ namespace GameKit
 
         void SetValue(Vector2 value)
         {
-            if (_lastValue != value)
+            if (Value != value)
             {
-                _lastValue = value;
-                onValueChange?.Invoke(_lastValue);
+                Value = value;
+                onValueChange?.Invoke(Value);
             }
         }
 
