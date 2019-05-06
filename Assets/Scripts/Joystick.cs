@@ -20,7 +20,6 @@ namespace GameKit
         /// <summary>
         /// 绑定的相机
         /// </summary>
-        [HideInInspector]
         public Camera camera;
 
         /// <summary>

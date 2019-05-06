@@ -24,11 +24,12 @@ namespace IL
                 GUIDeviceInfo.Show();
             }
 
-            StageMgr.Ins.Switch<GameStage>();
+            UIPanelMgr.Ins.Switch<GamePanel>();
         }        
 
         static void RegistViews()
         {
+            ViewFactory.Register<GamePanel>(AssetBundleName.PREFABS, "GamePanel");
             ViewFactory.Register<GameStage>(AssetBundleName.PREFABS, "GameStage");
         }
     }
