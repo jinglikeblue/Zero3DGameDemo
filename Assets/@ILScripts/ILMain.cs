@@ -1,7 +1,5 @@
 ﻿using DG.Tweening;
 using IL.Zero;
-using Jing;
-using System.Text;
 using UnityEngine;
 using Zero;
 
