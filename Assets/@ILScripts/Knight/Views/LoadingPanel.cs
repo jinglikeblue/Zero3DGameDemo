@@ -54,7 +54,11 @@ namespace Knight
         {
             if(_bar.fillAmount < _progress)
             {
-                _bar.fillAmount += 0.01f;
+                _bar.fillAmount += 0.1f;
+                if(_bar.fillAmount > _progress)
+                {
+                    _bar.fillAmount = _progress;
+                }
             }
         }
     }
