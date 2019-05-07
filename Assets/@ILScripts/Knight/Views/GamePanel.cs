@@ -14,7 +14,7 @@ namespace IL
         {
             _stage = StageMgr.Ins.Switch<GameStage>();
             _moveJoystick = GetChildComponent<Joystick>("Joystick");
-            _moveJoystick.uiCamera = GameObject.Find("UICamera").GetComponent<Camera>();
+            //_moveJoystick.uiCamera = GameObject.Find("UICamera").GetComponent<Camera>();
             _signTouchpad = GetChildComponent<Touchpad>("Touchpad");
         }
 

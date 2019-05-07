@@ -14,17 +14,19 @@ namespace GameKit
 
         [Header("摇杆最大半径(UGUI)")]
         public float maxRadius = 0;
+
         [Header("摇杆最小半径(UGUI)")]
         public float minRadius = 0;
-        [Header("摇杆框")]
-        public Transform stickBorder;
-        [Header("摇杆")]
-        public Transform stick;
 
         /// <summary>
-        /// 绑定的相机
+        /// 摇杆边框
         /// </summary>
-        public Camera uiCamera;
+        Transform stickBorder;
+
+        /// <summary>
+        /// 摇杆图
+        /// </summary>
+        Transform stick;
 
         /// <summary>
         /// 触摸的起始位置
@@ -51,6 +53,12 @@ namespace GameKit
         /// 触摸ID
         /// </summary>
         int _touchId = -1;
+
+        private void Awake()
+        {
+            stickBorder = transform.GetChild(0);
+            stick = stickBorder.GetChild(0);
+        }
 
         void Start()
         {
@@ -122,9 +130,9 @@ namespace GameKit
         /// </summary>
         /// <param name="go"></param>
         /// <returns></returns>
-        Vector2 GetLocalMousePosition(GameObject go)
+        Vector2 GetLocalMousePosition(GameObject go, Camera camera)
         {
-            if (null == uiCamera)
+            if (null == camera)
             {
                 throw new Exception("Joystick need binding a camera");
             }
@@ -151,9 +159,8 @@ namespace GameKit
             }
             Vector2 screenPos = new Vector2(mousePos.x, mousePos.y);
             Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(go.GetComponent<RectTransform>(), screenPos, uiCamera, out localPoint);
-
-            //Debug.LogFormat("Mouse:{0}  Screen:{1}  LocalPoint:{2}", Input.mousePosition, screenMouse, localPoint);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(go.GetComponent<RectTransform>(), screenPos, camera, out localPoint);
+            
             return localPoint;
         }
 
@@ -176,8 +183,7 @@ namespace GameKit
                     Touch touch = Input.touches[i];
                     if (touch.phase == TouchPhase.Began)
                     {
-                        _touchId = touch.fingerId;
-                        //Debug.LogFormat("绑定TouchId:{0}", _touchId);
+                        _touchId = touch.fingerId;                        
                         return true;
                     }
                 }
@@ -186,14 +192,13 @@ namespace GameKit
         }
 
         void UnbindTouch()
-        {
-            //Debug.LogFormat("解绑TouchId:{0}", _touchId);
+        {            
             _touchId = -1;
         }
 
 
         public void OnPointerDown(PointerEventData eventData)
-        {
+        {            
             BindTouch();
 
             if (eventData.pointerId != _touchId)
@@ -201,7 +206,7 @@ namespace GameKit
                 return;
             }
 
-            stickBorder.localPosition = GetLocalMousePosition(gameObject);
+            stickBorder.localPosition = GetLocalMousePosition(gameObject, eventData.pressEventCamera);
             stickBorder.GetComponent<CanvasGroup>().alpha = 0.4f;
 
         }
@@ -215,7 +220,7 @@ namespace GameKit
 
             _isStickMode = true;
 
-            _touchStartPos = GetLocalMousePosition(stickBorder.gameObject);
+            _touchStartPos = GetLocalMousePosition(stickBorder.gameObject, eventData.pressEventCamera);
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -240,23 +245,21 @@ namespace GameKit
                 return;
             }
 
-            Vector2 touchNowPos = GetLocalMousePosition(stickBorder.gameObject);
+            Vector2 touchNowPos = GetLocalMousePosition(stickBorder.gameObject, eventData.pressEventCamera);
 
-            var moveVector = (touchNowPos - _touchStartPos);
-            //Debug.LogFormat("start:{0}   mouse:{1}    moved:{2}", _touchStartPos, Input.mousePosition, moveVector);
+            var moveVector = (touchNowPos - _touchStartPos);            
             if (moveVector.magnitude > maxRadius)
             {
-                var k = moveVector.magnitude / maxRadius;
-                moveVector /= k;
+                moveVector = moveVector.normalized * maxRadius;                
             }
             stick.localPosition = moveVector;
 
             Vector2 value = Vector2.zero;
             if (moveVector.magnitude >= minRadius)
             {
-                value = new Vector2(moveVector.x, moveVector.y);
+                value = new Vector2(moveVector.x / maxRadius, moveVector.y / maxRadius);
             }
-
+            
             SetValue(value);
         }
     }

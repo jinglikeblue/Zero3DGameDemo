@@ -42,7 +42,7 @@ public class Knight : AView
         Vector3 dir = _moveDir.normalized;
 
         if (_moveDir != Vector3.zero)
-        {
+        {            
             if (_moveDir.magnitude > 0.9f)
             {
                 moveState = 2;
