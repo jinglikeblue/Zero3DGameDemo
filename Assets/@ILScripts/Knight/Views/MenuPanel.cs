@@ -76,7 +76,7 @@ namespace Knight
 
         private void Enter()
         {
-            UIPanelMgr.Ins.Switch<GamePanel>();
+            UIPanelMgr.Ins.Switch<LoadingPanel>(new LoadingVO(typeof(GamePanel)));            
         }
 
         private void SetResolution(PointerEventData obj)

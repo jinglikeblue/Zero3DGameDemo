@@ -44,7 +44,7 @@ namespace Knight
 
         private void Exit()
         {
-            UIPanelMgr.Ins.Switch<MenuPanel>();
+            UIPanelMgr.Ins.Switch<LoadingPanel>(new LoadingVO(typeof(MenuPanel)));            
         }
 
         private void OnSignValueChange(Vector2 v)

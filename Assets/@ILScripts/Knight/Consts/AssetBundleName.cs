@@ -7,6 +7,7 @@ namespace Knight
 {
     class AssetBundleName
     {
-        public static string PREFABS = "hot_res/prefabs";
+        public static string ROOT = "hot_res";
+        public static string GAME = "hot_res/game";
     }
 }

@@ -25,14 +25,15 @@ namespace IL
                 GUIDeviceInfo.Show();
             }
 
-            UIPanelMgr.Ins.Switch<MenuPanel>();
+            UIPanelMgr.Ins.SwitchASync<MenuPanel>();
         }        
 
         static void RegistViews()
         {
-            ViewFactory.Register<MenuPanel>(AssetBundleName.PREFABS, "MenuPanel");
-            ViewFactory.Register<GamePanel>(AssetBundleName.PREFABS, "GamePanel");
-            ViewFactory.Register<GameStage>(AssetBundleName.PREFABS, "GameStage");
+            ViewFactory.Register<LoadingPanel>(AssetBundleName.ROOT, "LoadingPanel");
+            ViewFactory.Register<MenuPanel>(AssetBundleName.ROOT, "MenuPanel");
+            ViewFactory.Register<GamePanel>(AssetBundleName.GAME, "GamePanel");
+            ViewFactory.Register<GameStage>(AssetBundleName.GAME, "GameStage");
         }
     }
 }
