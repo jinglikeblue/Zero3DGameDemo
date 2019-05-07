@@ -4,74 +4,77 @@ using IL.Zero;
 using Zero;
 using System;
 
-public class Knight : AView
+namespace Knight
 {
-    [SerializeField]
-    Animator _animator;
-
-    [SerializeField]
-    CharacterController _controller;
-
-    [Header("移动速度")]
-    public float moveSpeed = 2;
-
-    [Header("跑动速度")]
-    public float runSpeed = 5;    
-
-    Vector3 _moveDir = Vector3.zero;
-
-    protected override void OnInit()
+    public class Knight : AView
     {
-        _animator = GetComponent<Animator>();
-        _controller = GetComponent<CharacterController>();
-    }
+        [SerializeField]
+        Animator _animator;
 
-    protected override void OnEnable()
-    {
-        ILBridge.Ins.onUpdate += OnUpdate;
-    }
+        [SerializeField]
+        CharacterController _controller;
 
-    protected override void OnDisable()
-    {
-        ILBridge.Ins.onUpdate -= OnUpdate;
-    }
+        [Header("移动速度")]
+        public float moveSpeed = 2;
 
-    private void OnUpdate()
-    {
-        int moveState = 0;
-        Vector3 dir = _moveDir.normalized;
+        [Header("跑动速度")]
+        public float runSpeed = 5;
 
-        if (_moveDir != Vector3.zero)
-        {            
-            if (_moveDir.magnitude > 0.9f)
-            {
-                moveState = 2;
-                _controller.SimpleMove(dir * runSpeed);
-            }
-            else
-            {
-                moveState = 1;
-                _controller.SimpleMove(dir * moveSpeed);
-            }
-        }
-        _animator.SetInteger("move_state", moveState);
-    }
+        Vector3 _moveDir = Vector3.zero;
 
-    public void Move(Vector3 dir)
-    {
-        _moveDir = dir;
-        Rotation();
-    }
-
-    void Rotation()
-    {
-        if (_moveDir != Vector3.zero)
+        protected override void OnInit()
         {
-            Quaternion q = Quaternion.FromToRotation(Vector3.forward, _moveDir);
-            Vector3 angle = new Vector3(0, q.eulerAngles.y, 0);
-            if (gameObject.transform.eulerAngles != angle)
+            _animator = GetComponent<Animator>();
+            _controller = GetComponent<CharacterController>();
+        }
+
+        protected override void OnEnable()
+        {
+            ILBridge.Ins.onUpdate += OnUpdate;
+        }
+
+        protected override void OnDisable()
+        {
+            ILBridge.Ins.onUpdate -= OnUpdate;
+        }
+
+        private void OnUpdate()
+        {
+            int moveState = 0;
+            Vector3 dir = _moveDir.normalized;
+
+            if (_moveDir != Vector3.zero)
             {
-                gameObject.transform.DORotate(angle, 0.3f);
+                if (_moveDir.magnitude > 0.9f)
+                {
+                    moveState = 2;
+                    _controller.SimpleMove(dir * runSpeed);
+                }
+                else
+                {
+                    moveState = 1;
+                    _controller.SimpleMove(dir * moveSpeed);
+                }
+            }
+            _animator.SetInteger("move_state", moveState);
+        }
+
+        public void Move(Vector3 dir)
+        {
+            _moveDir = dir;
+            Rotation();
+        }
+
+        void Rotation()
+        {
+            if (_moveDir != Vector3.zero)
+            {
+                Quaternion q = Quaternion.FromToRotation(Vector3.forward, _moveDir);
+                Vector3 angle = new Vector3(0, q.eulerAngles.y, 0);
+                if (gameObject.transform.eulerAngles != angle)
+                {
+                    gameObject.transform.DORotate(angle, 0.3f);
+                }
             }
         }
     }

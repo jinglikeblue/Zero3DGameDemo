@@ -33,7 +33,7 @@ namespace Sokoban
         {
             float totalMB = total / 1024f / 1024f;
             float loadedMB = totalMB * progress;
-            textProgress.text = string.Format("资源下载中...{0}%\n({1}mb/{2}mb)", (int)(progress * 100f), loadedMB.ToString("0.00"), totalMB.ToString("0.00"));
+            textProgress.text = string.Format("Downloading...{0}%\n({1}mb/{2}mb)", (int)(progress * 100f), loadedMB.ToString("0.00"), totalMB.ToString("0.00"));
         }
 
         private void OnStageChange(Preload.EState obj)

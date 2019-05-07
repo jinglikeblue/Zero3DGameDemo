@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zero;
 
-namespace IL
+namespace Knight
 {
     class GameStage : AView
     {
