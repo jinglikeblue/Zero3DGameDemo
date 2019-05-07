@@ -12,10 +12,10 @@ namespace GameKit
         IEndDragHandler
     {
 
-        [Header("摇杆最大半径(UGUI)")]
+        [Header("摇杆最大偏移半径")]
         public float maxRadius = 0;
 
-        [Header("摇杆最小半径(UGUI)")]
+        [Header("摇杆最小偏移半径(低于这个偏移半径得到的Value为Zero)")]
         public float minRadius = 0;
 
         /// <summary>
