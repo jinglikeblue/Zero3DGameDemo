@@ -109,7 +109,7 @@ namespace Knight
             if (_tLowResolution.isOn)
             {
                 Global.Ins.resolution = 0;
-                Global.Ins.resolutionSize = ScreenUtil.AdaptationResolution(Global.Ins.defaultResolution.x, Global.Ins.defaultResolution.y, 1280, 720);
+                Global.Ins.resolutionSize = ScreenUtil.AdaptationResolution(Global.Ins.defaultResolution.x, Global.Ins.defaultResolution.y, 1280, 720, true);
             }
             else
             {
