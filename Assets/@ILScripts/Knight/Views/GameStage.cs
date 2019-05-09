@@ -13,6 +13,13 @@ namespace Knight
         Vector3 _c2p;
         Vector3 _moveDir;
         Knight _knight;
+        public Knight Knight
+        {
+            get
+            {
+                return _knight;            
+            }
+        }
         CameraController _cameraController;
 
         protected override void OnInit()

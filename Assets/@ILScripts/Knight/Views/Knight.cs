@@ -22,9 +22,11 @@ namespace Knight
 
         Vector3 _moveDir = Vector3.zero;
 
+        int _state = 0;
+
         protected override void OnInit()
         {
-            _animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();            
             _controller = GetComponent<CharacterController>();
         }
 
@@ -55,12 +57,13 @@ namespace Knight
                     moveState = 1;
                     _controller.SimpleMove(dir * moveSpeed);
                 }
-            }
+            }            
             _animator.SetInteger("move_state", moveState);
         }
 
         public void Move(Vector3 dir)
         {
+            _state = 3;
             _moveDir = dir;
             Rotation();
         }
@@ -76,6 +79,18 @@ namespace Knight
                     gameObject.transform.DORotate(angle, 0.3f);
                 }
             }
+        }
+
+        public void Attack()
+        {
+            _state = 1;
+            _animator.SetInteger("move_state", 3);
+        }
+
+        public void Block()
+        {
+            _state = 2;
+            _animator.SetInteger("move_state", 4);
         }
     }
 }

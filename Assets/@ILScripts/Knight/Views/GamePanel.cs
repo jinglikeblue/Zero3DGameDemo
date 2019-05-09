@@ -4,6 +4,7 @@ using IL;
 using IL.Zero;
 using UnityEngine;
 using UnityEngine.UI;
+using Zero;
 
 namespace Knight
 {
@@ -12,7 +13,10 @@ namespace Knight
         GameStage _stage;
         Joystick _moveJoystick;
         Touchpad _signTouchpad;
-        Button _btnExit; 
+        Button _btnExit;
+
+        Button _btnAtk;
+        Button _btnDef;
 
         protected override void OnInit()
         {
@@ -21,6 +25,9 @@ namespace Knight
             _moveJoystick = GetChildComponent<Joystick>("Joystick");
             //_moveJoystick.uiCamera = GameObject.Find("UICamera").GetComponent<Camera>();
             _signTouchpad = GetChildComponent<Touchpad>("Touchpad");
+
+            _btnAtk = GetChildComponent<Button>("BtnAtk");
+            _btnDef = GetChildComponent<Button>("BtnDef");
         }
 
         protected override void OnDestroy()
@@ -33,6 +40,10 @@ namespace Knight
             _btnExit.onClick.AddListener(Exit);
             _moveJoystick.onValueChange += OnMoveValueChange;
             _signTouchpad.onValueChange += OnSignValueChange;
+            _btnAtk.onClick.AddListener(DoAttack);
+            _btnDef.onClick.AddListener(DoBlock);
+
+            AudioPlayer.Ins.PlayBGM(ResMgr.Ins.Load<AudioClip>(AssetBundleName.AUDIO, "BattleBGM"));
         }
 
         protected override void OnDisable()
@@ -40,6 +51,18 @@ namespace Knight
             _btnExit.onClick.RemoveListener(Exit);
             _moveJoystick.onValueChange -= OnMoveValueChange;
             _signTouchpad.onValueChange -= OnSignValueChange;
+            _btnAtk.onClick.RemoveListener(DoAttack);
+            _btnDef.onClick.RemoveListener(DoBlock);
+        }
+
+        private void DoAttack()
+        {
+            _stage.Knight.Attack();
+        }
+
+        private void DoBlock()
+        {
+            _stage.Knight.Block();
         }
 
         private void Exit()

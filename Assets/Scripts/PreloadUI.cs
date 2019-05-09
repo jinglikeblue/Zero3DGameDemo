@@ -20,6 +20,8 @@ namespace Sokoban
             preload.onStateChange += OnStageChange;
             preload.onError += OnError;
             preload.StartPreload(new ILRuntimeGenerics());
+
+            AudioPlayer.Ins.PlayBGM(Resources.Load<AudioClip>("PreloadBGM"));
         }
 
         private void OnError(string err)

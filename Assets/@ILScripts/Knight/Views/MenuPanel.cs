@@ -39,6 +39,8 @@ namespace Knight
             _tHighQuality = GetChildComponent<Toggle>("QualitySet/List/THigh");
 
             _textResolution = GetChildComponent<Text>("TextResolution");
+
+
         }
 
         protected override void OnEnable()
@@ -57,6 +59,10 @@ namespace Knight
 
             SyncUI();
             UpdateSetting(null);
+
+
+            //ResMgr.Ins.LoadAsync(AssetBundleName.AUDIO, "MenuBGM", onLoadedBGM);
+            AudioPlayer.Ins.PlayBGM(ResMgr.Ins.Load<AudioClip>(AssetBundleName.AUDIO, "MenuBGM"));
         }
 
         protected override void OnDisable()
