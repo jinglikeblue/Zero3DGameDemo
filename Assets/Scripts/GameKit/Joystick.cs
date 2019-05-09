@@ -53,11 +53,13 @@ namespace GameKit
         /// 触摸ID
         /// </summary>
         int _touchId = -1;
+        float _borderDefaultAlpha = 1f;
 
         private void Awake()
         {
             stickBorder = transform.GetChild(0);
             stick = stickBorder.GetChild(0);
+            _borderDefaultAlpha = stickBorder.GetComponent<CanvasGroup>().alpha;
         }
 
         void Start()
@@ -166,7 +168,7 @@ namespace GameKit
 
         void ResetStickBorder()
         {
-            stickBorder.GetComponent<CanvasGroup>().alpha = 0.2f;
+            stickBorder.GetComponent<CanvasGroup>().alpha = _borderDefaultAlpha;
             stickBorder.position = _stickBorderInitPos;
         }
 
