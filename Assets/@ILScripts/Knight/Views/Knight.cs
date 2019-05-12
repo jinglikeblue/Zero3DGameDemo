@@ -22,7 +22,7 @@ namespace Knight
 
         Vector3 _moveDir = Vector3.zero;
 
-        int _state = 0;
+        float _moveSpeed = 0f;
 
         protected override void OnInit()
         {
@@ -41,31 +41,48 @@ namespace Knight
         }
 
         private void OnUpdate()
-        {
-            int moveState = 0;
-            Vector3 dir = _moveDir.normalized;
+        {                       
+            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-            if (_moveDir != Vector3.zero)
+            var hash = Animator.StringToHash("CanNotMove");
+
+            if(stateInfo.tagHash == hash)
             {
-                if (_moveDir.magnitude > 0.9f)
-                {
-                    moveState = 2;
-                    _controller.SimpleMove(dir * runSpeed);
-                }
-                else
-                {
-                    moveState = 1;
-                    _controller.SimpleMove(dir * moveSpeed);
-                }
-            }            
-            _animator.SetInteger("move_state", moveState);
+                return;
+            }
+
+            if (_moveSpeed >= 1)
+            {
+                Vector3 dir = _moveDir.normalized;
+                _controller.SimpleMove(dir * _moveSpeed);
+            }
         }
 
         public void Move(Vector3 dir)
         {
-            _state = 3;
             _moveDir = dir;
+            UpdateMoveSpeed();
             Rotation();
+        }
+
+        void UpdateMoveSpeed()
+        {
+            if (_moveDir != Vector3.zero)
+            {
+                if (_moveDir.magnitude > 0.9f)
+                {
+                    _moveSpeed = runSpeed;
+                }
+                else
+                {
+                    _moveSpeed = moveSpeed;
+                }
+            }
+            else
+            {
+                _moveSpeed = 0;
+            }
+            _animator.SetFloat("Speed", _moveSpeed);
         }
 
         void Rotation()
@@ -83,13 +100,12 @@ namespace Knight
 
         public void Attack()
         {
-            _state = 1;
-            _animator.SetInteger("move_state", 3);
+            _animator.SetInteger("DeathType", 1);
+            //_animator.SetInteger("Action", 1);
         }
 
         public void Block()
         {
-            _state = 2;
             _animator.SetInteger("move_state", 4);
         }
     }
