@@ -12,6 +12,7 @@ namespace Knight
     {
         Toggle _tLowResolution;
         Toggle _tNormalResolution;
+        Toggle _tHighResolution;
 
         Toggle _t30fps;
         Toggle _t60fps;
@@ -30,6 +31,7 @@ namespace Knight
 
             _tLowResolution = GetChildComponent<Toggle>("ResolutionSet/List/TLow");
             _tNormalResolution = GetChildComponent<Toggle>("ResolutionSet/List/TNormal");
+            _tHighResolution = GetChildComponent<Toggle>("ResolutionSet/List/THigh");
 
             _t30fps = GetChildComponent<Toggle>("FPSSet/List/T30");
             _t60fps = GetChildComponent<Toggle>("FPSSet/List/T60");
@@ -47,6 +49,7 @@ namespace Knight
         {
             PointerClickEventListener.Get(_tLowResolution.gameObject).onEvent += SetResolution;
             PointerClickEventListener.Get(_tNormalResolution.gameObject).onEvent += SetResolution;
+            PointerClickEventListener.Get(_tHighResolution.gameObject).onEvent += SetResolution;
 
             PointerClickEventListener.Get(_t30fps.gameObject).onEvent += UpdateSetting;
             PointerClickEventListener.Get(_t60fps.gameObject).onEvent += UpdateSetting;
@@ -69,6 +72,7 @@ namespace Knight
         {
             PointerClickEventListener.Get(_tLowResolution.gameObject).onEvent -= SetResolution;
             PointerClickEventListener.Get(_tNormalResolution.gameObject).onEvent -= SetResolution;
+            PointerClickEventListener.Get(_tHighResolution.gameObject).onEvent -= SetResolution;
 
             PointerClickEventListener.Get(_t30fps.gameObject).onEvent -= UpdateSetting;
             PointerClickEventListener.Get(_t60fps.gameObject).onEvent -= UpdateSetting;
@@ -115,11 +119,16 @@ namespace Knight
             if (_tLowResolution.isOn)
             {
                 Global.Ins.resolution = 0;
-                Global.Ins.resolutionSize = ScreenUtil.AdaptationResolution(Global.Ins.defaultResolution.x, Global.Ins.defaultResolution.y, 1280, 720, true);
+                Global.Ins.resolutionSize = ScreenUtil.AdaptationResolution(Global.Ins.defaultResolution.x, Global.Ins.defaultResolution.y, 1280, 720, false);
             }
-            else
+            else if (_tNormalResolution.isOn)
             {
                 Global.Ins.resolution = 1;
+                Global.Ins.resolutionSize = ScreenUtil.AdaptationResolution(Global.Ins.defaultResolution.x, Global.Ins.defaultResolution.y, 1280, 720, true);
+            }
+            else if(_tHighResolution.isOn)
+            {
+                Global.Ins.resolution = 2;
                 Global.Ins.resolutionSize = Global.Ins.defaultResolution;                
             }
 
@@ -156,9 +165,12 @@ namespace Knight
             {
                 case 0:
                     _tLowResolution.isOn = true;
-                    break;
+                    break;                    
                 case 1:
                     _tNormalResolution.isOn = true;
+                    break;
+                case 2:
+                    _tHighResolution.isOn = true;
                     break;
             }
 
