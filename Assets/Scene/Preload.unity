@@ -417,12 +417,12 @@ MonoBehaviour:
   runtimeCfg:
     isLogEnable: 1
     mainPrefab: hot_res/ILContent
-    isHotResProject: 1
+    isHotResProject: 0
     hotResMode: 2
     netRoot: http://wepieces.cn/unity/zero/3d_game_demo/res
     localResRoot: res
     hotResRoot: Assets/Resources
-    isUseDll: 0
+    isUseDll: 1
     ilType: 0
     fileName: ILProject
     className: IL.ILMain

@@ -7,7 +7,8 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: layer_GrassRockyAlbedo(15.000,15.000)(0.000,0.000)(0.000,0.000,0.000),0.000,0.000
-  m_DiffuseTexture: {fileID: 2800000, guid: efcbc2e10ee0a1e47a5f12695c844309, type: 3}
+  m_DiffuseTexture: {fileID: 3649442713143138361, guid: 00000000000000000000000000000000,
+    type: 0}
   m_NormalMapTexture: {fileID: 0}
   m_MaskMapTexture: {fileID: 0}
   m_TileSize: {x: 15, y: 15}

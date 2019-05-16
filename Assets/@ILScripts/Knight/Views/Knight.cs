@@ -8,10 +8,9 @@ namespace Knight
 {
     public class Knight : AView
     {
-        [SerializeField]
-        Animator _animator;
 
-        [SerializeField]
+        KnightASM _asm;       
+        
         CharacterController _controller;
 
         [Header("移动速度")]
@@ -26,7 +25,7 @@ namespace Knight
 
         protected override void OnInit()
         {
-            _animator = GetComponent<Animator>();            
+            _asm = new KnightASM(GetComponent<Animator>());            
             _controller = GetComponent<CharacterController>();
         }
 
@@ -41,15 +40,8 @@ namespace Knight
         }
 
         private void OnUpdate()
-        {                       
-            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-
-            var hash = Animator.StringToHash("CanNotMove");
-
-            if(stateInfo.tagHash == hash)
-            {
-                return;
-            }
+        {
+            _asm.StepCheck();
 
             if (_moveSpeed >= 1)
             {
@@ -82,7 +74,7 @@ namespace Knight
             {
                 _moveSpeed = 0;
             }
-            _animator.SetFloat("Speed", _moveSpeed);
+            _asm.Move(_moveSpeed);            
         }
 
         void Rotation()
@@ -100,13 +92,14 @@ namespace Knight
 
         public void Attack()
         {
-            _animator.SetInteger("DeathType", 1);
+            _asm.Attack(1);
+            //_animator.SetInteger("DeathType", 1);
             //_animator.SetInteger("Action", 1);
         }
 
         public void Block()
         {
-            _animator.SetInteger("move_state", 4);
+            //_animator.SetInteger("move_state", 4);
         }
     }
 }
