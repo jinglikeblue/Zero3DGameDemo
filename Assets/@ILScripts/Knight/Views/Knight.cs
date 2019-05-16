@@ -90,9 +90,9 @@ namespace Knight
             }
         }
 
-        public void Attack()
+        public void Action(int type)
         {
-            _asm.Attack(1);
+            _asm.Attack(type);
             //_animator.SetInteger("DeathType", 1);
             //_animator.SetInteger("Action", 1);
         }

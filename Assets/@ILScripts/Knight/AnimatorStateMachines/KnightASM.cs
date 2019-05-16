@@ -59,12 +59,12 @@ namespace Knight
                         break;
                 }
             }
-            else if (stateInfo.normalizedTime >= 0 && stateInfo.tagHash == actionTagHash)
-            {
-                _vo.action = 0;
-                SyncParameters();
-                return;
-            }
+            //else if (stateInfo.normalizedTime >= 0 && stateInfo.tagHash == actionTagHash)
+            //{
+            //    _vo.action = 0;
+            //    SyncParameters();
+            //    return;
+            //}
         }
 
         void SyncParameters()
