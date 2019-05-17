@@ -45,7 +45,7 @@ namespace Knight
 
 
             PointerDownEventListener.Get(_btnAtk.gameObject).onEvent += (e)=> {
-                _stage.Knight.Action(3);
+                _stage.Knight.Action(2);
             };
 
             PointerUpEventListener.Get(_btnAtk.gameObject).onEvent += (e) => {
@@ -53,7 +53,7 @@ namespace Knight
             };
 
             PointerDownEventListener.Get(_btnDef.gameObject).onEvent += (e) => {
-                _stage.Knight.Action(2);
+                _stage.Knight.Action(1);
             };
 
             PointerUpEventListener.Get(_btnDef.gameObject).onEvent += (e) => {
