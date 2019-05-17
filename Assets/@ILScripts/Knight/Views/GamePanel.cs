@@ -40,24 +40,22 @@ namespace Knight
             _btnExit.onClick.AddListener(Exit);
             _moveJoystick.onValueChange += OnMoveValueChange;
             _signTouchpad.onValueChange += OnSignValueChange;
-            //_btnAtk.onClick.AddListener(DoAttack);
-            //_btnDef.onClick.AddListener(DoBlock);
 
 
             PointerDownEventListener.Get(_btnAtk.gameObject).onEvent += (e)=> {
-                _stage.Knight.Action(2);
+                _stage.Knight.Attack(true);
             };
 
             PointerUpEventListener.Get(_btnAtk.gameObject).onEvent += (e) => {
-                _stage.Knight.Action(0);
+                _stage.Knight.Attack(false);
             };
 
             PointerDownEventListener.Get(_btnDef.gameObject).onEvent += (e) => {
-                _stage.Knight.Action(1);
+                _stage.Knight.Block(true);
             };
 
             PointerUpEventListener.Get(_btnDef.gameObject).onEvent += (e) => {
-                _stage.Knight.Action(0);
+                _stage.Knight.Block(false);
             };
 
             AudioPlayer.Ins.PlayBGM(ResMgr.Ins.Load<AudioClip>(AssetBundleName.AUDIO, "BattleBGM"));
@@ -68,18 +66,6 @@ namespace Knight
             _btnExit.onClick.RemoveListener(Exit);
             _moveJoystick.onValueChange -= OnMoveValueChange;
             _signTouchpad.onValueChange -= OnSignValueChange;            
-            //_btnAtk.onClick.RemoveListener(DoAttack);
-            //_btnDef.onClick.RemoveListener(DoBlock);
-        }
-
-        private void DoAttack()
-        {
-            _stage.Knight.Action(1);
-        }
-
-        private void DoBlock()
-        {
-            _stage.Knight.Block();
         }
 
         private void Exit()

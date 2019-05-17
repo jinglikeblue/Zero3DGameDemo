@@ -114,31 +114,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &1101090654692907808
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 4
-    m_ConditionEvent: speed
-    m_EventTreshold: 0.1
-  m_DstStateMachine: {fileID: 1107112080941226202}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.85
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &1101100767132445208
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1002,31 +977,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &1101902767219166004
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 3
-    m_ConditionEvent: speed
-    m_EventTreshold: 0.1
-  m_DstStateMachine: {fileID: 1107839190692684558}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.85
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &1101936833159817934
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1128,7 +1078,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7f03f1a9ec34dde4dabb11497ff8ed58, type: 2}
+  m_Motion: {fileID: 7400000, guid: 635b4bb34cda08c45bb014dde333db5f, type: 2}
   m_Tag: Action
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1302,7 +1252,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 2a1ccd944ff587f448ea9be86d4accce, type: 2}
+  m_Motion: {fileID: 7400000, guid: 6b3e83ccb9ff95b488d07cf51e2e1354, type: 2}
   m_Tag: Action
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1390,34 +1340,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1102556215941897904
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Attack2
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 1101090654692907808}
-  - {fileID: 1101902767219166004}
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6b3e83ccb9ff95b488d07cf51e2e1354, type: 2}
-  m_Tag: Action
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &1102850511065735014
 AnimatorState:
   serializedVersion: 5
@@ -1486,16 +1408,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102850511065735014}
-    m_Position: {x: 120, y: -240, z: 0}
+    m_Position: {x: 720, y: -192, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102003524721100716}
-    m_Position: {x: 504, y: 36, z: 0}
+    m_Position: {x: 744, y: 96, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102148332505081572}
-    m_Position: {x: 540, y: 288, z: 0}
+    m_Position: {x: 780, y: 264, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102313799193217764}
-    m_Position: {x: 276, y: -60, z: 0}
+    m_Position: {x: 384, y: 60, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1504,7 +1426,7 @@ AnimatorStateMachine:
   m_AnyStatePosition: {x: 84, y: 48, z: 0}
   m_EntryPosition: {x: 36, y: 204, z: 0}
   m_ExitPosition: {x: 876, y: 360, z: 0}
-  m_ParentStateMachinePosition: {x: 756, y: -156, z: 0}
+  m_ParentStateMachinePosition: {x: 1020, y: -84, z: 0}
   m_DefaultState: {fileID: 1102313799193217764}
 --- !u!1107 &1107159601281607102
 AnimatorStateMachine:
@@ -1536,25 +1458,21 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102439970760832876}
-    m_Position: {x: 648, y: -180, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1102556215941897904}
-    m_Position: {x: 648, y: 12, z: 0}
+    m_Position: {x: 648, y: -48, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102327700867324402}
-    m_Position: {x: 648, y: -84, z: 0}
+    m_Position: {x: 648, y: 36, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102116045387804948}
-    m_Position: {x: 648, y: -288, z: 0}
+    m_Position: {x: 648, y: -144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102131663225462890}
-    m_Position: {x: 648, y: 204, z: 0}
+    m_Position: {x: 648, y: 132, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions:
   - {fileID: 1109080766692023640}
   - {fileID: 1109943991174996272}
-  - {fileID: 1109284308454391566}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
@@ -1669,23 +1587,6 @@ AnimatorTransition:
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102439970760832876}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 1
---- !u!1109 &1109284308454391566
-AnimatorTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 6
-    m_ConditionEvent: action
-    m_EventTreshold: 3
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 1102556215941897904}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0

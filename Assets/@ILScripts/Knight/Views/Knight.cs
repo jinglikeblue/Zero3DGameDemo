@@ -3,30 +3,42 @@ using DG.Tweening;
 using IL.Zero;
 using Zero;
 using System;
+using Jing;
 
 namespace Knight
 {
     public class Knight : AView
     {
+        /// <summary>
+        /// 移动的速度
+        /// </summary>
+        const float MOVE_SPEED = 2;
+
+        /// <summary>
+        /// 跑动的速度
+        /// </summary>
+        const float RUN_SPEED = 5;
 
         KnightASM _asm;       
         
-        CharacterController _controller;
-
-        [Header("移动速度")]
-        public float moveSpeed = 2;
-
-        [Header("跑动速度")]
-        public float runSpeed = 5;
+        CharacterController _controller;       
 
         Vector3 _moveDir = Vector3.zero;
 
         float _moveSpeed = 0f;
 
+        FiniteStateMachine<EKnightState> _fsm = new FiniteStateMachine<EKnightState>();
+
         protected override void OnInit()
         {
             _asm = new KnightASM(GetComponent<Animator>());            
             _controller = GetComponent<CharacterController>();
+
+            _fsm.RegistState(EKnightState.IDLE, null, null, null, null);
+            _fsm.RegistState(EKnightState.MOVE, null, null, null, null);
+            _fsm.RegistState(EKnightState.ATTACK, null, null, null, null);
+            _fsm.RegistState(EKnightState.BLOCK, null, null, null, null);
+            _fsm.SwitchState(EKnightState.IDLE);
         }
 
         protected override void OnEnable()
@@ -63,11 +75,11 @@ namespace Knight
             {
                 if (_moveDir.magnitude > 0.9f)
                 {
-                    _moveSpeed = runSpeed;
+                    _moveSpeed = RUN_SPEED;
                 }
                 else
                 {
-                    _moveSpeed = moveSpeed;
+                    _moveSpeed = MOVE_SPEED;
                 }
             }
             else
@@ -90,16 +102,21 @@ namespace Knight
             }
         }
 
-        public void Action(int type)
+        public void Attack(bool isHold)
         {
-            _asm.Attack(type);
-            //_animator.SetInteger("DeathType", 1);
-            //_animator.SetInteger("Action", 1);
+            _asm.Action(isHold?2:0);            
         }
 
-        public void Block()
+        public void Block(bool isHold)
         {
-            //_animator.SetInteger("move_state", 4);
+            if (isHold)
+            {
+                _asm.Action(1);
+            }
+            else
+            {
+                _asm.Action(0);
+            }
         }
     }
 }

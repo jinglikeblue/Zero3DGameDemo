@@ -43,9 +43,9 @@ namespace Knight
         {
             var stateInfo = _a.GetCurrentAnimatorStateInfo(0);          
             
-            if(stateInfo.fullPathHash == idle1Hash)
+            if(stateInfo.fullPathHash == idle1Hash && stateInfo.normalizedTime > 4)
             {
-                var random = Random.Range(0, 10);                
+                var random = Random.Range(2, 5);                
                 switch (random)
                 {
                     case 2:
@@ -73,9 +73,7 @@ namespace Knight
             _a.SetInteger(DEATH_TYPE, _vo.deathType);
             _a.SetInteger(ACTION, _vo.action);
             _a.SetInteger(IDLE_TYPE, _vo.idleType);
-        }
-
-        
+        }        
 
         public void Move(float speed)
         {
@@ -83,7 +81,7 @@ namespace Knight
             SyncParameters();
         }
 
-        public void Attack(int type)
+        public void Action(int type)
         {
             _vo.speed = 0;
             _vo.idleType = 0;
