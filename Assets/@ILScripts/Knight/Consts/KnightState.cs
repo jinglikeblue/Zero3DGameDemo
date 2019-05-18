@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Knight
 {
-    enum EKnightState
+    public enum EKnightState
     {
         /// <summary>
         /// 空闲
@@ -23,7 +23,7 @@ namespace Knight
         /// <summary>
         /// 防御
         /// </summary>
-        BLOCK,
+        DEFENCE,
         
     }
 }

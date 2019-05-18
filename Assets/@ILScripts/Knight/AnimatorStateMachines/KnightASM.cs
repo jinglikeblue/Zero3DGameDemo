@@ -12,92 +12,43 @@ namespace Knight
         const string ACTION = "action";
         const string IDLE_TYPE = "idleType";
 
-        struct ParametersVO
+        public int ActionTagHash { get; }
+
+        public int Idle1Hash { get; }
+
+        public int WalkHash { get; }
+
+        public int RunHash { get; }
+
+        public int AttackHash { get; }
+
+        public int BlockIdleHash { get; }
+        public int BlockHash { get; }
+
+        public Animator Animator { get; }
+
+        KnightVO _vo;
+
+        public KnightASM(Animator animator, KnightVO vo)
         {
-            public float speed;
-            public int deathType;
-            public int action;
-            public int idleType;
+            Animator = animator;
+            _vo = vo;
+
+            ActionTagHash = Animator.StringToHash("Action");
+            Idle1Hash = Animator.StringToHash("Base Layer.Idle.Idle1");
+            WalkHash = Animator.StringToHash("Base Layer.Move.Walk");
+            RunHash = Animator.StringToHash("Base Layer.Move.Run");
+            AttackHash = Animator.StringToHash("Base Layer.Action.Attack");
+            BlockIdleHash = Animator.StringToHash("Base Layer.Action.BlockIdle");
+            BlockHash = Animator.StringToHash("Base Layer.Action.Block");
         }
 
-        int actionTagHash;
-        int idle1Hash;
-
-        private Animator _a;
-
-        ParametersVO _vo;
-
-        public KnightASM(Animator animator)
+        public void SyncParameters()
         {
-            _a = animator;
-            _vo.speed = 0;
-            _vo.deathType = 0;
-            _vo.action = 0;
-            _vo.idleType = 0;
-
-            actionTagHash = Animator.StringToHash("Action");
-            idle1Hash = Animator.StringToHash("Base Layer.Idle.Idle1");
-        }
-
-        public void StepCheck()
-        {
-            var stateInfo = _a.GetCurrentAnimatorStateInfo(0);          
-            
-            if(stateInfo.fullPathHash == idle1Hash && stateInfo.normalizedTime > 4)
-            {
-                var random = Random.Range(2, 5);                
-                switch (random)
-                {
-                    case 2:
-                        _vo.idleType = 2;
-                        break;
-                    case 3:
-                        _vo.idleType = 3;
-                        break;
-                    case 4:
-                        _vo.idleType = 4;
-                        break;
-                }
-            }
-            //else if (stateInfo.normalizedTime >= 0 && stateInfo.tagHash == actionTagHash)
-            //{
-            //    _vo.action = 0;
-            //    SyncParameters();
-            //    return;
-            //}
-        }
-
-        void SyncParameters()
-        {
-            _a.SetFloat(SPEED, _vo.speed);
-            _a.SetInteger(DEATH_TYPE, _vo.deathType);
-            _a.SetInteger(ACTION, _vo.action);
-            _a.SetInteger(IDLE_TYPE, _vo.idleType);
+            Animator.SetFloat(SPEED, _vo.speed);
+            Animator.SetInteger(DEATH_TYPE, _vo.deathType);
+            Animator.SetInteger(ACTION, _vo.action);
+            Animator.SetInteger(IDLE_TYPE, _vo.idleType);
         }        
-
-        public void Move(float speed)
-        {
-            _vo.speed = speed;            
-            SyncParameters();
-        }
-
-        public void Action(int type)
-        {
-            _vo.speed = 0;
-            _vo.idleType = 0;
-            _vo.action = type;
-            SyncParameters();
-        }
-
-        public void Death(int type)
-        {
-            _vo.deathType = type;
-            SyncParameters();
-        }
-
-        public void Block(int block)
-        {
-
-        }
     }
 }

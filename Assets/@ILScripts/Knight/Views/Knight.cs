@@ -4,6 +4,7 @@ using IL.Zero;
 using Zero;
 using System;
 using Jing;
+using System.Collections.Generic;
 
 namespace Knight
 {
@@ -19,26 +20,25 @@ namespace Knight
         /// </summary>
         const float RUN_SPEED = 5;
 
-        KnightASM _asm;       
-        
-        CharacterController _controller;       
+        public KnightASM ASM { get; private set; }
+        public KnightVO VO { get; private set; }
+        public CharacterController CC { get; private set; }
+        public FiniteStateMachine<EKnightState> FSM { get; private set; }
 
-        Vector3 _moveDir = Vector3.zero;
-
-        float _moveSpeed = 0f;
-
-        FiniteStateMachine<EKnightState> _fsm = new FiniteStateMachine<EKnightState>();
+        Dictionary<EKnightState, BaseKnightStateController> _stateDic = new Dictionary<EKnightState, BaseKnightStateController>();
 
         protected override void OnInit()
         {
-            _asm = new KnightASM(GetComponent<Animator>());            
-            _controller = GetComponent<CharacterController>();
+            VO = new KnightVO();
+            FSM = new FiniteStateMachine<EKnightState>();
+            ASM = new KnightASM(GetComponent<Animator>(), VO);            
+            CC = GetComponent<CharacterController>();
 
-            _fsm.RegistState(EKnightState.IDLE, null, null, null, null);
-            _fsm.RegistState(EKnightState.MOVE, null, null, null, null);
-            _fsm.RegistState(EKnightState.ATTACK, null, null, null, null);
-            _fsm.RegistState(EKnightState.BLOCK, null, null, null, null);
-            _fsm.SwitchState(EKnightState.IDLE);
+            _stateDic[EKnightState.IDLE] = new KnightIdleStateController(this);
+            _stateDic[EKnightState.MOVE] = new KnightMoveStateController(this);
+            _stateDic[EKnightState.ATTACK] = new KnightAttackStateController(this);
+            _stateDic[EKnightState.DEFENCE] = new KnightDefenceStateController(this);
+            FSM.SwitchState(EKnightState.IDLE);
         }
 
         protected override void OnEnable()
@@ -53,69 +53,55 @@ namespace Knight
 
         private void OnUpdate()
         {
-            _asm.StepCheck();
-
-            if (_moveSpeed >= 1)
-            {
-                Vector3 dir = _moveDir.normalized;
-                _controller.SimpleMove(dir * _moveSpeed);
-            }
+            FSM.Update(Time.deltaTime);            
         }
 
         public void Move(Vector3 dir)
         {
-            _moveDir = dir;
+            VO.moveDir = dir;
             UpdateMoveSpeed();
-            Rotation();
         }
 
         void UpdateMoveSpeed()
         {
-            if (_moveDir != Vector3.zero)
+            if (VO.moveDir != Vector3.zero)
             {
-                if (_moveDir.magnitude > 0.9f)
+                if (VO.moveDir.magnitude > 0.9f)
                 {
-                    _moveSpeed = RUN_SPEED;
+                    VO.speed = RUN_SPEED;
                 }
                 else
                 {
-                    _moveSpeed = MOVE_SPEED;
+                    VO.speed = MOVE_SPEED;
                 }
             }
             else
             {
-                _moveSpeed = 0;
-            }
-            _asm.Move(_moveSpeed);            
-        }
-
-        void Rotation()
-        {
-            if (_moveDir != Vector3.zero)
-            {
-                Quaternion q = Quaternion.FromToRotation(Vector3.forward, _moveDir);
-                Vector3 angle = new Vector3(0, q.eulerAngles.y, 0);
-                if (gameObject.transform.eulerAngles != angle)
-                {
-                    gameObject.transform.DORotate(angle, 0.3f);
-                }
-            }
+                VO.speed = 0;
+            }                     
         }
 
         public void Attack(bool isHold)
         {
-            _asm.Action(isHold?2:0);            
+            if (isHold)
+            {
+                VO.action = 2;
+            }
+            else
+            {
+                VO.action = 0;
+            }                        
         }
 
         public void Block(bool isHold)
         {
             if (isHold)
             {
-                _asm.Action(1);
+                VO.action = 1;
             }
             else
             {
-                _asm.Action(0);
+                VO.action = 0;
             }
         }
     }
