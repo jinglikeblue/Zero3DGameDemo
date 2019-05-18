@@ -61,7 +61,7 @@ namespace Knight
 
         private void OnUpdate()
         {
-            _blackKnight.canvas?.transform.LookAt(_knight.gameObject.transform);
+            _blackKnight.canvas?.transform.LookAt(Camera.transform);
             ReviseDirByCamera();
         }
 
