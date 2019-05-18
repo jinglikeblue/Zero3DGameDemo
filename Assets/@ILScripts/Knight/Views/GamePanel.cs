@@ -13,14 +13,14 @@ namespace Knight
         GameStage _stage;
         Joystick _moveJoystick;
         Touchpad _signTouchpad;
-        Button _btnExit;
+        Button _btnSetting;
 
         Button _btnAtk;
         Button _btnDef;
 
         protected override void OnInit()
         {
-            _btnExit = GetChildComponent<Button>("BtnExit");
+            _btnSetting = GetChildComponent<Button>("BtnSetting");
             _stage = StageMgr.Ins.Switch<GameStage>();
             _moveJoystick = GetChildComponent<Joystick>("Joystick");
             //_moveJoystick.uiCamera = GameObject.Find("UICamera").GetComponent<Camera>();
@@ -37,7 +37,7 @@ namespace Knight
 
         protected override void OnEnable()
         {
-            _btnExit.onClick.AddListener(Exit);
+            _btnSetting.onClick.AddListener(ShowSettingWin);
             _moveJoystick.onValueChange += OnMoveValueChange;
             _signTouchpad.onValueChange += OnSignValueChange;
 
@@ -63,14 +63,14 @@ namespace Knight
 
         protected override void OnDisable()
         {
-            _btnExit.onClick.RemoveListener(Exit);
+            _btnSetting.onClick.RemoveListener(ShowSettingWin);
             _moveJoystick.onValueChange -= OnMoveValueChange;
             _signTouchpad.onValueChange -= OnSignValueChange;            
         }
 
-        private void Exit()
+        private void ShowSettingWin()
         {
-            UIPanelMgr.Ins.Switch<LoadingPanel>(new LoadingVO(typeof(MenuPanel)));            
+            UIWinMgr.Ins.Open<SettingWin>();            
         }
 
         private void OnSignValueChange(Vector2 v)

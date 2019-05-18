@@ -22,11 +22,15 @@ namespace Knight
         }
         CameraController _cameraController;
 
+        BlackKnight _blackKnight;
+
+
         protected override void OnInit()
         {
             Camera = GetChildComponent<Camera>("Camera");
             _cameraController = GetChildComponent<CameraController>("Camera");
             _knight = CreateViewChlid<Knight>("Knight");
+            _blackKnight = CreateViewChlid<BlackKnight>("BlackKnight");
         }
 
         protected override void OnDestroy()
@@ -57,6 +61,7 @@ namespace Knight
 
         private void OnUpdate()
         {
+            _blackKnight.canvas?.transform.LookAt(_knight.gameObject.transform);
             ReviseDirByCamera();
         }
 
