@@ -7,7 +7,7 @@ namespace Sokoban
     {
         public override void Register(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
         {
-            appdomain.DelegateManager.RegisterMethodDelegate<System.String>();            appdomain.DelegateManager.RegisterMethodDelegate<System.Int32, System.Object>();            appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.Vector2>();            appdomain.DelegateManager.RegisterDelegateConvertor<DG.Tweening.TweenCallback>((act) =>
+            appdomain.DelegateManager.RegisterMethodDelegate<System.String>();            appdomain.DelegateManager.RegisterMethodDelegate<System.Int32, System.Object>();            appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.Vector2>();            appdomain.DelegateManager.RegisterFunctionDelegate<System.Int32, System.Boolean>();            appdomain.DelegateManager.RegisterDelegateConvertor<DG.Tweening.TweenCallback>((act) =>
             {
                 return new DG.Tweening.TweenCallback(() =>
                 {
