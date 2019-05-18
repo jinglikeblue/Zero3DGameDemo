@@ -48,6 +48,10 @@ namespace Knight
                         Knight.FSM.SwitchState(EKnightState.IDLE);
                     }
                 }
+                else if(Knight.VO.action == 1)
+                {
+                    Knight.FSM.SwitchState(EKnightState.DEFENCE);
+                }
             }
         }
     }
