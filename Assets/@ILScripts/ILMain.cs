@@ -26,6 +26,8 @@ namespace IL
                 GUIDeviceInfo.Show();
             }
 
+            Global.Ins.audioDevice = AudioDevice.Get("music");
+
             UIPanelMgr.Ins.SwitchASync<MenuPanel>();
         }        
 

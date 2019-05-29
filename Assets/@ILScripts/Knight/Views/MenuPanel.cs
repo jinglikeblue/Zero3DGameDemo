@@ -21,7 +21,8 @@ namespace Knight
         {
             _btnEnter.onClick.AddListener(Enter);
 
-            AudioPlayer.Ins.PlayBGM(ResMgr.Ins.Load<AudioClip>(AssetBundleName.AUDIO, "MenuBGM"));
+            Global.Ins.audioDevice.StopAll();
+            Global.Ins.audioDevice.Play(ResMgr.Ins.Load<AudioClip>(AssetBundleName.AUDIO, "MenuBGM"), true);
         }
 
         protected override void OnDisable()

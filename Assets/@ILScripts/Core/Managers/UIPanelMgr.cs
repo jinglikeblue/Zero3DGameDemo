@@ -11,39 +11,13 @@ namespace IL
     /// </summary>
     public class UIPanelMgr : ASingleton<UIPanelMgr>
     {
-        class Animator : ASingularViewSwitchAnimator
-        {            
-            public override void StartSwitch(AView oldView, AView newView, Action<ASingularViewSwitchAnimator> onSwitchComplete)
-            {
-                ILBridge.Ins.StartCoroutine(Switch(oldView, newView, onSwitchComplete));
-            }
-
-            IEnumerator Switch(AView oldView, AView newView, Action<ASingularViewSwitchAnimator> onSwitchComplete)
-            {
-                var oldCG = oldView.GetComponent<CanvasGroup>();
-                var newCG = newView.GetComponent<CanvasGroup>();
-                newCG.alpha = 0;
-
-                while (newCG.alpha < 1)
-                {
-                    newCG.alpha += 0.01f;
-                    oldCG.alpha -= 0.01f;
-                    yield return new WaitForEndOfFrame();
-                }
-
-                onSwitchComplete.Invoke(this);
-            }
-        }
-
-
         SingularViewLayer _layer;
 
         public void Init(Transform root)
         {
             if (null == _layer)
             {
-                _layer = new SingularViewLayer(root.gameObject);
-                //_layer.RegistSwitchAnimator(new Animator());
+                _layer = new SingularViewLayer(root.gameObject);                
             }
         }
 

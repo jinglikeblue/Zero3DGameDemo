@@ -9,6 +9,8 @@ namespace Knight
 {
     public class Global : ASingleton<Global>
     {
+        public AudioDevice audioDevice;
+
         public int fps = 60;
         public int quality = 1;
         public int resolution = 1;

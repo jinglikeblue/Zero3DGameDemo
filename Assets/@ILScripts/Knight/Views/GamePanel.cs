@@ -58,7 +58,8 @@ namespace Knight
                 _stage.Knight.Block(false);
             };
 
-            AudioPlayer.Ins.PlayBGM(ResMgr.Ins.Load<AudioClip>(AssetBundleName.AUDIO, "BattleBGM"));
+            Global.Ins.audioDevice.StopAll();
+            Global.Ins.audioDevice.Play(ResMgr.Ins.Load<AudioClip>(AssetBundleName.AUDIO, "BattleBGM"), true);            
         }
 
         protected override void OnDisable()
