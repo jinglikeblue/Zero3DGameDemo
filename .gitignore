@@ -36,3 +36,4 @@ sysinfo.txt
 *.unitypackage
 /ILProject/codes
 /Caches
+/Logs
