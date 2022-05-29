@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UIPanel
+    uniqueID: 3220614835
+    locked: 0
+  - name: UIWin
+    uniqueID: 48978973
+    locked: 0
